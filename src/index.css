@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand — #660099 system */
+  --color-brand-50: #f9f4ff;
+  --color-brand-100: #f1e6ff;
+  --color-brand-200: #e4ccff;
+  --color-brand-300: #cfa1ff;
+  --color-brand-400: #b26bed;
+  --color-brand-500: #8e24aa;
+  --color-brand-600: #660099;
+  --color-brand-700: #4a0072;
+  --color-brand-800: #370055;
+  --color-brand-900: #26003a;
+  --color-brand-950: #1a0129;
+
+  /* Ink — dark navy / charcoal */
+  --color-ink-50: #f4f4f9;
+  --color-ink-100: #e8e8f0;
+  --color-ink-200: #cdcdde;
+  --color-ink-300: #a5a5bd;
+  --color-ink-400: #7a7a97;
+  --color-ink-500: #5b5b76;
+  --color-ink-600: #43425c;
+  --color-ink-700: #34334a;
+  --color-ink-800: #23223a;
+  --color-ink-900: #16142b;
+  --color-ink-950: #0d0b1c;
+
+  --font-sans: "Inter", "Noto Sans Bengali", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Poppins", "Inter", "Noto Sans Bengali", ui-sans-serif, sans-serif;
+
+  --shadow-soft: 0 2px 12px -2px rgb(23 18 43 / 0.08), 0 1px 3px rgb(23 18 43 / 0.05);
+  --shadow-card: 0 10px 30px -12px rgb(38 0 58 / 0.18);
+  --shadow-glow: 0 8px 40px -8px rgb(102 0 153 / 0.45);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 11s ease-in-out infinite;
+  --animate-blob: blob 18s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-pulse-soft: pulse-soft 3.5s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes blob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.12); }
+    66% { transform: translate(-25px, 25px) scale(0.94); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-white text-ink-800 antialiased font-sans;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Bangla typography ────────────────────────────────────── */
+/* When Bangla is active, switch to the Bengali font stack with
+   tuned line-height, word spacing and heading wrapping so the
+   layout feels intentionally designed, not translated. */
+.lang-bn body,
+.lang-bn button,
+.lang-bn input,
+.lang-bn select,
+.lang-bn textarea {
+  font-family: "Noto Sans Bengali", "Hind Siliguri", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+.lang-bn body {
+  word-spacing: 0.02em;
+  letter-spacing: 0;
+}
+.lang-bn h1,
+.lang-bn h2,
+.lang-bn h3,
+.lang-bn h4 {
+  line-height: 1.4 !important;
+  text-wrap: balance;
+}
+.lang-bn p {
+  line-height: 1.75;
+}
+.lang-bn .font-display {
+  font-family: "Noto Sans Bengali", "Hind Siliguri", "Poppins", sans-serif;
+  font-weight: 700;
+}
+.lang-bn .uppercase {
+  letter-spacing: 0.02em;
+}
+.lang-bn .nav-link::after {
+  bottom: -2px;
+}
+
+::selection {
+  background: var(--color-brand-600);
+  color: #fff;
+}
+
+/* ---------- Reusable layout ---------- */
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+/* ---------- Surfaces & effects ---------- */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+@utility bg-grid-dark {
+  background-image:
+    linear-gradient(to right, rgb(13 11 28 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(13 11 28 / 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+@utility text-gradient {
+  @apply bg-gradient-to-r from-brand-400 via-brand-500 to-brand-600 bg-clip-text text-transparent;
+}
+
+@utility text-gradient-dark {
+  @apply bg-gradient-to-r from-brand-600 via-brand-700 to-brand-800 bg-clip-text text-transparent;
+}
+
+@utility glass {
+  background: rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.14);
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 90ms; }
+.reveal-delay-2 { transition-delay: 180ms; }
+.reveal-delay-3 { transition-delay: 270ms; }
+.reveal-delay-4 { transition-delay: 360ms; }
+
+/* ---------- Accent underline for nav links ---------- */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-brand-600), var(--color-brand-400));
+  transition: right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  right: 0;
+}
+
+/* ---------- Gradient border card ---------- */
+.card-gradient-border {
+  position: relative;
+  background: #fff;
+}
+.card-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgb(102 0 153 / 0.45), transparent 40%, transparent 60%, rgb(142 36 170 / 0.35));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ---------- Focus visibility (a11y) ---------- */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-ink-50); }
+::-webkit-scrollbar-thumb { background: var(--color-brand-300); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-brand-500); }
+
+/* ---------- Print (invoice) ---------- */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    box-shadow: none !important;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
